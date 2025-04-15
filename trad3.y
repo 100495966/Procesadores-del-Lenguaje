@@ -108,7 +108,7 @@ var_decl:
                                           $$.code = gen_code (temp) ; }
             | IDENTIF '[' NUMBER ']'    { sprintf (temp, "(setq %s (make-array %d))", $1.code, $3.value) ; 
                                           $$.code = gen_code (temp) ; }
- 		    | IDENTIF '=' NUMBER        { sprintf (temp, "(setq %s %d)", $1.code, $3.value) ; 
+ 		    | IDENTIF '=' expresion        { sprintf (temp, "(setq %s %s)", $1.code, $3.code) ; 
                                           $$.code = gen_code (temp) ; }
             ;
 
@@ -193,8 +193,8 @@ var_decl_local:
             | IDENTIF '[' NUMBER ']'    { add_local_var($1.code);
                                           sprintf (temp, "(setq %s_%s (make-array %d))\n", current_function_name, $1.code, $3.value) ; 
                                           $$.code = gen_code (temp) ; }
- 		    | IDENTIF '=' NUMBER        { add_local_var($1.code);
-                                          sprintf (temp, "(setq %s_%s %d)\n", current_function_name, $1.code, $3.value) ; 
+ 		    | IDENTIF '=' expresion     { add_local_var($1.code);
+                                          sprintf (temp, "(setq %s_%s %s)\n", current_function_name, $1.code, $3.code) ; 
                                           $$.code = gen_code (temp) ; }
             ;
 
