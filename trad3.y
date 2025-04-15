@@ -139,14 +139,14 @@ r_argumentos:                                   { $$.code = gen_code(""); }
             ;
 
 procedimiento:  IDENTIF '(' proc_argumentos ')'   { sprintf (temp, "(%s%s%s)", $1.code, (strcmp("", $3.code) != 0) ? " " : "", $3.code) ; 
-                                                 $$.code = gen_code (temp) ; }
+                                                    $$.code = gen_code (temp) ; }
 
 proc_argumentos:                            { $$.code = gen_code(""); }
-            | expresion proc_r_argumentos     { sprintf (temp, "%s%s", $1.code, $2.code) ; 
-                                             $$.code = gen_code (temp) ; } 
+            | expresion proc_r_argumentos   { sprintf (temp, "%s%s", $1.code, $2.code) ; 
+                                              $$.code = gen_code (temp) ; } 
             ;
 
-proc_r_argumentos:                           { $$.code = gen_code(""); }
+proc_r_argumentos:                             { $$.code = gen_code(""); }
             | ',' expresion  proc_r_argumentos { sprintf (temp, " %s%s", $2.code, $3.code) ; 
                                                  $$.code = gen_code (temp) ; }
             ; 
@@ -157,27 +157,27 @@ axioma_codigo:
                                          $$.code = gen_code (temp) ; }
         	;
 
-sentencia:    IDENTIF '=' expresion ';'                                                 { sprintf (temp, "(setf %s %s)\n", get_var_name($1.code), $3.code) ; 
-                                                                                          $$.code = gen_code (temp) ; }
-            | IDENTIF '[' expresion ']' '=' expresion ';'                               { sprintf (temp, "(setf (aref %s %s) %s)\n", get_var_name($1.code), $3.code, $6.code) ; 
-                                                                                          $$.code = gen_code (temp) ; }
-            | INTEGER var_list_local ';'                                                { $$.code = gen_code ($2.code) ; }
-            | PUTS '(' STRING ')' ';'                                                   { sprintf (temp, "(print \"%s\")\n", $3.code) ;  
-                                                                                          $$.code = gen_code (temp) ; }
-            | PRINTF '(' STRING ',' elems ')' ';'                                       { sprintf (temp, "%s", $5.code) ;  
-                                                                                          $$.code = gen_code (temp) ; }
-            | WHILE  '(' expresion ')' '{' axioma_codigo '}'                            {  sprintf (temp, "(loop while %s do\n%s)\n", $3.code, $6.code) ;
-                                                                                          $$.code = gen_code (temp) ; }
-            | IF  '(' expresion ')' '{' axioma_codigo '}'                               { sprintf (temp, "(if %s\n(progn\n%s)\n)\n", $3.code, $6.code) ;
-                                                                                          $$.code = gen_code (temp) ; }
-            | IF  '(' expresion ')' '{' axioma_codigo '}' ELSE '{' axioma_codigo '}'    { sprintf (temp, "(if %s\n(progn\n%s)\n(progn\n%s)\n)\n", $3.code, $6.code, $10.code) ;
-                                                                                          $$.code = gen_code (temp) ; }
+sentencia:    IDENTIF '=' expresion ';'                                                     { sprintf (temp, "(setf %s %s)\n", get_var_name($1.code), $3.code) ; 
+                                                                                                $$.code = gen_code (temp) ; }
+            | IDENTIF '[' expresion ']' '=' expresion ';'                                   { sprintf (temp, "(setf (aref %s %s) %s)\n", get_var_name($1.code), $3.code, $6.code) ; 
+                                                                                                $$.code = gen_code (temp) ; }
+            | INTEGER var_list_local ';'                                                    { $$.code = gen_code ($2.code) ; }
+            | PUTS '(' STRING ')' ';'                                                       { sprintf (temp, "(print \"%s\")\n", $3.code) ;  
+                                                                                                $$.code = gen_code (temp) ; }
+            | PRINTF '(' STRING ',' elems ')' ';'                                           { sprintf (temp, "%s", $5.code) ;  
+                                                                                                $$.code = gen_code (temp) ; }
+            | WHILE  '(' expresion ')' '{' axioma_codigo '}'                                {  sprintf (temp, "(loop while %s do\n%s)\n", $3.code, $6.code) ;
+                                                                                                $$.code = gen_code (temp) ; }
+            | IF  '(' expresion ')' '{' axioma_codigo '}'                                   { sprintf (temp, "(if %s\n(progn\n%s)\n)\n", $3.code, $6.code) ;
+                                                                                                $$.code = gen_code (temp) ; }
+            | IF  '(' expresion ')' '{' axioma_codigo '}' ELSE '{' axioma_codigo '}'        { sprintf (temp, "(if %s\n(progn\n%s)\n(progn\n%s)\n)\n", $3.code, $6.code, $10.code) ;
+                                                                                                $$.code = gen_code (temp) ; }
             | FOR  '(' inicializacion ';' expresion ';' inc_dec ')' '{' axioma_codigo '}'   { sprintf (temp, "%s(loop while %s do\n%s%s)\n", $3.code, $5.code, $10.code, $7.code) ;
-                                                                                          $$.code = gen_code (temp) ; }
-            | procedimiento ';'                                                         { sprintf (temp, "%s\n", $1.code) ;
-                                                                                          $$.code = gen_code(temp); }    
-            | RETURN expresion ';'                                                      { sprintf (temp, "(return-from %s %s)\n", current_function_name, $2.code) ;
-                                                                                          $$.code = gen_code(temp); }                                                                                
+                                                                                                $$.code = gen_code (temp) ; }
+            | procedimiento ';'                                                             { sprintf (temp, "%s\n", $1.code) ;
+                                                                                                $$.code = gen_code(temp); }    
+            | RETURN expresion ';'                                                          { sprintf (temp, "(return-from %s %s)\n", current_function_name, $2.code) ;
+                                                                                                $$.code = gen_code(temp); }                                                                                
             ;
 
 var_list_local:
@@ -240,21 +240,21 @@ expresion:      termino                  { $$.code = gen_code($1.code); }
                                            $$.code = gen_code (temp) ; }
             |   expresion AND expresion  { sprintf (temp, "(and %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
-            |   expresion OR expresion  { sprintf (temp, "(or %s %s)", $1.code, $3.code) ;
+            |   expresion OR expresion   { sprintf (temp, "(or %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
             |   expresion NEQ expresion  { sprintf (temp, "(/= %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
-            |   expresion EQ expresion  { sprintf (temp, "(= %s %s)", $1.code, $3.code) ;
+            |   expresion EQ expresion   { sprintf (temp, "(= %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
             |   expresion '<' expresion  { sprintf (temp, "(< %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
-            |   expresion LE expresion  { sprintf (temp, "(<= %s %s)", $1.code, $3.code) ;
+            |   expresion LE expresion   { sprintf (temp, "(<= %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
             |   expresion '>' expresion  { sprintf (temp, "(> %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
-            |   expresion GE expresion  { sprintf (temp, "(>= %s %s)", $1.code, $3.code) ;
+            |   expresion GE expresion   { sprintf (temp, "(>= %s %s)", $1.code, $3.code) ;
                                            $$.code = gen_code (temp) ; }
-            |   '!' expresion           { sprintf (temp, "(not %s)", $2.code) ;
+            |   '!' expresion            { sprintf (temp, "(not %s)", $2.code) ;
                                             $$.code = gen_code (temp) ; }   
             ;
 
@@ -264,14 +264,14 @@ termino:        operando                           { $$.code = gen_code($1.code)
                                                      $$.code = gen_code (temp) ; } 
             ;
 
-operando:       IDENTIF                 { sprintf (temp, "%s", get_var_name($1.code)) ;
-                                          $$.code = gen_code (temp) ; }
-            |   NUMBER                  { sprintf (temp, "%d", $1.value) ;
-                                          $$.code = gen_code (temp) ; }
-            |   IDENTIF '[' expresion ']'    { sprintf (temp, "(aref %s %s)", get_var_name($1.code), $3.code) ; 
-                                          $$.code = gen_code (temp) ; }
-            |   procedimiento                  { $$.code = gen_code($1.code); }
-            |   '(' expresion ')'       { $$.code = gen_code($2.code); }
+operando:       IDENTIF                     { sprintf (temp, "%s", get_var_name($1.code)) ;
+                                              $$.code = gen_code (temp) ; }
+            |   NUMBER                      { sprintf (temp, "%d", $1.value) ;
+                                              $$.code = gen_code (temp) ; }
+            |   IDENTIF '[' expresion ']'   { sprintf (temp, "(aref %s %s)", get_var_name($1.code), $3.code) ; 
+                                              $$.code = gen_code (temp) ; }
+            |   procedimiento               { $$.code = gen_code($1.code); }
+            |   '(' expresion ')'           { $$.code = gen_code($2.code); }
             ;
 
 
