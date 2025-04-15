@@ -1,0 +1,27 @@
+int a;
+int b = 7;
+int c, d = 10, e;
+int array [44];
+
+main(){
+
+    a = 2;
+    b = 7;
+    c = 10;
+
+    int f;
+    int g = 7;
+    int h, i = 10, j;
+
+    f = 2;
+    h = 7;
+    j = 10;
+
+    int mivector [45];
+
+    printf("", array[4]);
+    printf("", mivector[8]);
+
+    array[11] = !!1 && !0 || !(3 <= 2);
+    mivector [5] = 123 ;
+}
